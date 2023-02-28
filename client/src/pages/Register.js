@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 export const Register = () => {
 	const [email, setEmail] = useState('');
@@ -12,9 +13,10 @@ export const Register = () => {
 				email,
 				password,
 			});
-			console.log(data);
-		} catch (error) {
-			console.log(error);
+
+			data?.error ? toast.error(data?.error) : toast.success('Check Email');
+		} catch (err) {
+			toast.error(err);
 		}
 	};
 
