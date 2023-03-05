@@ -8,9 +8,26 @@ import { nanoid } from 'nanoid';
 import validator from 'email-validator';
 import { emailHtml } from '../templates/emailHTML.js';
 import { resetPasswordHtml } from '../templates/resetPasswordHtml.js';
-import { tokenAndUserResponse } from '../helpers/tokenAndUserResponse.js';
 
 dotenv.config();
+
+const tokenAndUserResponse = (req, res, user) => {
+	const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+		expiresIn: '1h',
+	});
+	const refreshToken = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+		expiresIn: '7d',
+	});
+
+	user.password = undefined;
+	user.resetCode = undefined;
+
+	return res.json({
+		token,
+		refreshToken,
+		user,
+	});
+};
 
 export const welcome = (req, res) => {
 	res.json({

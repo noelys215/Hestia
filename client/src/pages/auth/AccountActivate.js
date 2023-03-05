@@ -5,31 +5,36 @@ import { useEffect } from 'react';
 import axios from 'axios';
 
 export const AccountActivate = () => {
-	/* Hooks */
+	// context
+	// eslint-disable-next-line no-unused-vars
+	const [auth, setAuth] = useAuth();
+	// hooks
 	const { token } = useParams();
 	const navigate = useNavigate();
-	/* Context */
-	const [auth, setAuth] = useAuth();
-
-	const requestActivation = async () => {
-		try {
-			const { data } = axios.post(`/register`, { token });
-			if (data?.error) {
-				toast.error(data?.error);
-			} else {
-				setAuth(data);
-				toast.success('Success');
-				navigate('/');
-			}
-		} catch (error) {
-			console.log(error);
-			toast.error('Something went wrong, try again');
-		}
-	};
 
 	useEffect(() => {
 		if (token) requestActivation();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [token]);
+
+	const requestActivation = async () => {
+		try {
+			const { data } = await axios.post(`/register`, { token });
+			if (data?.error) {
+				toast.error(data.error);
+			} else {
+				// save in local storage
+				localStorage.setItem('auth', JSON.stringify(data));
+				// save in context
+				setAuth(data);
+				toast.success('Successfully logged in. Welcome to Realist app.');
+				navigate('/');
+			}
+		} catch (err) {
+			console.log(err);
+			toast.error('Something went wrong. Try again.');
+		}
+	};
 
 	return (
 		<div
