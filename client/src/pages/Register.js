@@ -1,21 +1,32 @@
 import { useState } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 export const Register = () => {
+	/* States */
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [loading, setLoading] = useState(false);
+	/* Hooks */
+	const navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const { data } = await axios.post(`${process.env.REACT_APP_API}/pre-register`, {
-				email,
-				password,
-			});
+			setLoading(true);
+			const { data } = await axios.post(`/pre-register`, { email, password });
 
-			data?.error ? toast.error(data?.error) : toast.success('Check Email');
+			if (data?.error) {
+				toast.error(data?.error);
+				setLoading(false);
+			} else {
+				toast.success('Check Email');
+				setLoading(false);
+				navigate('/');
+			}
 		} catch (err) {
+			setLoading(false);
 			toast.error(err);
 		}
 	};
@@ -46,7 +57,9 @@ export const Register = () => {
 								onChange={(e) => setPassword(e.target.value)}
 								value={password}
 							/>
-							<button className="btn btn-primary col-12 mb-4">Register</button>
+							<button className="btn btn-primary col-12 mb-4" disabled={loading}>
+								{loading ? 'Waiting...' : 'Register'}
+							</button>
 						</form>
 					</div>
 				</div>
