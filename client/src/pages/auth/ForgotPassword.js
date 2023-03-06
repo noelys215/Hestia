@@ -1,42 +1,34 @@
 import { useState } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/auth';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-export const Login = () => {
-	// context
-	// eslint-disable-next-line no-unused-vars
-	const [auth, setAuth] = useAuth();
-	// state
+export const ForgotPassword = () => {
+	// State
 	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
 	const [loading, setLoading] = useState(false);
-	// hooks
+	// Hooks
 	const navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			// console.log(email, password);
 			setLoading(true);
-			const { data } = await axios.post(`/login`, {
+			const { data } = await axios.post(`/forgot-password`, {
 				email,
-				password,
 			});
 			if (data?.error) {
 				toast.error(data.error);
 				setLoading(false);
 			} else {
-				setAuth(data);
-				localStorage.setItem('auth', JSON.stringify(data));
-				toast.success('Login successful');
+				toast.success('Check your email.');
 				setLoading(false);
 				navigate('/');
 			}
 			console.log(data);
 		} catch (err) {
-			console.log(err.message);
+			console.log(err);
 			toast.error('Something went wrong. Try again.');
 			setLoading(false);
 		}
@@ -44,7 +36,7 @@ export const Login = () => {
 
 	return (
 		<div>
-			<h1 className="display-1 bg-primary text-light p-5">Login</h1>
+			<h1 className="display-1 bg-primary text-light p-5">Forgot password</h1>
 
 			<div className="container">
 				<div className="row">
@@ -59,22 +51,13 @@ export const Login = () => {
 								value={email}
 								onChange={(e) => setEmail(e.target.value)}
 							/>
-							<input
-								type="password"
-								placeholder="Enter your password"
-								className="form-control mb-4"
-								required
-								autoFocus
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
-							/>
 							<button disabled={loading} className="btn btn-primary col-12 mb-4">
-								{loading ? 'Waiting...' : 'Login'}
+								{loading ? 'Waiting...' : 'Submit'}
 							</button>
 						</form>
 
-						<Link className="text-danger" to={'/auth/forgot-password'}>
-							Forgot Password
+						<Link className="text-danger" to="/login">
+							Back to login
 						</Link>
 					</div>
 				</div>

@@ -6,18 +6,20 @@ import { Register } from './pages/Register';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AccountActivate } from './pages/auth/AccountActivate';
+import { ForgotPassword } from './pages/auth/ForgotPassword';
 
 function App() {
 	return (
 		<BrowserRouter>
-			<Main />
 			<Toaster />
 			<AuthProvider>
+				<Main />
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/register" element={<Register />} />
 					<Route path="/auth/account-activate/:token" element={<AccountActivate />} />
+					<Route path="/auth/forgot-password" element={<ForgotPassword />} />
 				</Routes>
 			</AuthProvider>
 		</BrowserRouter>
