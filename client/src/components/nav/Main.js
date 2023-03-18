@@ -17,11 +17,23 @@ export const Main = () => {
 
 	const loggedIn = auth.user !== null && auth.token !== '' && auth.refreshToken !== '';
 
+	const handlePostAdClick = () => {
+		if (loggedIn) {
+			navigate('/ad/create');
+		} else {
+			navigate('/login');
+		}
+	};
+
 	return (
 		<nav className="nav d-flex justify-content-between lead">
 			<NavLink className="nav-link" aria-current="page" to="/">
 				Home
 			</NavLink>
+
+			<a href="" onClick={handlePostAdClick} className="nav-link pointer">
+				Post Ad
+			</a>
 
 			{!loggedIn ? (
 				<>

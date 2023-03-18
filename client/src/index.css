@@ -21,3 +21,7 @@
 	font: inherit;
 	outline: none !important;
 }
+
+.pointer {
+	cursor: 'pointer';
+}
