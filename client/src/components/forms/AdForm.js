@@ -36,11 +36,54 @@ export const AdForm = ({ action, type }) => {
 			</div>
 
 			<CurrencyInput
-				placeholder="Enter Price"
+				placeholder="Price"
 				defaultValue={ad?.price}
 				className="form-control mb-3"
 				onValueChange={(val) => setAd({ ...ad, price: val })}
 			/>
+
+			<input
+				type="number"
+				min="0"
+				className="form-control mb-3"
+				placeholder="Number of Bathrooms"
+				value={ad.bathrooms}
+				onChange={(e) => setAd({ ...ad, bathrooms: e.target.value })}
+			/>
+
+			<input
+				type="number"
+				min="0"
+				className="form-control mb-3"
+				placeholder="Number of Car Parks"
+				value={ad.carpark}
+				onChange={(e) => setAd({ ...ad, carpark: e.target.value })}
+			/>
+
+			<input
+				type="text"
+				className="form-control mb-3"
+				placeholder="Land Size"
+				value={ad.landsize}
+				onChange={(e) => setAd({ ...ad, landsize: e.target.value })}
+			/>
+
+			<input
+				type="text"
+				className="form-control mb-3"
+				placeholder="Title"
+				value={ad.title}
+				onChange={(e) => setAd({ ...ad, title: e.target.value })}
+			/>
+
+			<textarea
+				className="form-control mb-3"
+				placeholder="Description"
+				value={ad.description}
+				onChange={(e) => setAd({ ...ad, description: e.target.value })}
+			/>
+
+			<button className="btn btn-primary">Submit</button>
 
 			<pre>{JSON.stringify(ad, null, 4)}</pre>
 		</>
