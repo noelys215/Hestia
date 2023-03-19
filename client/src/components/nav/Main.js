@@ -17,13 +17,7 @@ export const Main = () => {
 
 	const loggedIn = auth.user !== null && auth.token !== '' && auth.refreshToken !== '';
 
-	const handlePostAdClick = () => {
-		if (loggedIn) {
-			navigate('/ad/create');
-		} else {
-			navigate('/login');
-		}
-	};
+	const handlePostAdClick = () => (loggedIn ? navigate('/ad/create') : navigate('/login'));
 
 	return (
 		<nav className="nav d-flex justify-content-between lead">

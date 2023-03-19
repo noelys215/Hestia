@@ -25,3 +25,15 @@
 .pointer {
 	cursor: 'pointer';
 }
+
+.hoverable:hover {
+	transform: scale(1.01);
+	box-shadow: 0.4rem 0.4rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+.react-photo-gallery--gallery img {
+	object-fit: cover;
+	height: 500px !important;
+}
+.square {
+	border-radius: 0px;
+}
