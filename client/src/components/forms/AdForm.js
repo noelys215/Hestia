@@ -21,8 +21,8 @@ export const AdForm = ({ action, type }) => {
 		<>
 			<div className="mb-3 form-control">
 				<GooglePlacesAutocomplete
-					apiKey={process.env.GOOGLE_PLACES_KEY}
-					apiOptions="au"
+					apiKey={process.env.REACT_APP_GOOGLE_PLACES_KEY}
+					apiOptions="us"
 					selectProps={{
 						defaultInputValue: ad?.address,
 						placeholder: 'Search for address..',
