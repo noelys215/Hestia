@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+import CurrencyInput from 'react-currency-input-field';
 
 export const AdForm = ({ action, type }) => {
 	/* State */
@@ -17,6 +18,7 @@ export const AdForm = ({ action, type }) => {
 		description: '',
 		loading: false,
 	});
+
 	return (
 		<>
 			<div className="mb-3 form-control">
@@ -32,6 +34,13 @@ export const AdForm = ({ action, type }) => {
 					}}
 				/>
 			</div>
+
+			<CurrencyInput
+				placeholder="Enter Price"
+				defaultValue={ad?.price}
+				className="form-control mb-3"
+				onValueChange={(val) => setAd({ ...ad, price: val })}
+			/>
 
 			<pre>{JSON.stringify(ad, null, 4)}</pre>
 		</>
