@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import CurrencyInput from 'react-currency-input-field';
+import { ImageUpload } from './ImageUpload';
 
 export const AdForm = ({ action, type }) => {
 	/* State */
@@ -34,6 +35,8 @@ export const AdForm = ({ action, type }) => {
 					}}
 				/>
 			</div>
+
+			<ImageUpload ad={ad} setAd={setAd} />
 
 			<CurrencyInput
 				placeholder="Price"
