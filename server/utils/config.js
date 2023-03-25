@@ -1,5 +1,6 @@
 import SES from 'aws-sdk/clients/ses.js';
 import * as dotenv from 'dotenv';
+import S3 from 'aws-sdk/clients/s3';
 dotenv.config();
 
 const awsConfig = {
@@ -10,3 +11,4 @@ const awsConfig = {
 };
 
 export const AWS_SES = new SES(awsConfig);
+export const AWS_S3 = new S3(awsConfig);
