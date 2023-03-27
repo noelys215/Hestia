@@ -48,30 +48,40 @@ export const ImageUpload = ({ ad, setAd }) => {
 		}
 	};
 
-	const handleDelete = async () => {
+	const handleDelete = async (photo) => {
+		const answer = window.confirm('Delete image?');
+		if (!answer) return;
+		setAd({ ...ad, uploading: true });
 		try {
-			setAd({ ...ad, uploading: true });
-		} catch (error) {
+			const { data } = await axios.post('/remove-image', photo);
+			if (data?.ok) {
+				setAd((prev) => ({
+					...prev,
+					photos: prev.photos.filter((p) => p.Key !== photo.Key),
+					uploading: false,
+				}));
+			}
+		} catch (err) {
+			console.log(err);
 			setAd({ ...ad, uploading: false });
-			console.log(error);
 		}
 	};
 
 	return (
 		<>
 			<label className="btn btn-secondary mb-4">
-				{ad.uploading ? 'Uploading...' : 'Upload Photos'}
-				<input
-					disabled={ad.uploading}
-					onChange={handleUpload}
-					type="file"
-					accept="image/*"
-					multiple
-					hidden
-				/>
+				{ad.uploading ? 'Processing...' : 'Upload photos'}
+				<input onChange={handleUpload} type="file" accept="image/*" multiple hidden />
 			</label>
-			{ad?.photos.map((photo) => (
-				<Avatar src={photo.Location} shape="square" size={'large'} className="mx-1 mb-4" />
+			{ad.photos?.map((file, index) => (
+				<Avatar
+					key={index}
+					src={file?.Location}
+					shape="square"
+					size="large"
+					className="ml-2 mb-4"
+					onClick={() => handleDelete(file)}
+				/>
 			))}
 		</>
 	);

@@ -35,3 +35,20 @@ export const uploadImage = async (req, res) => {
 		res.json({ error: 'Upload Failed' });
 	}
 };
+
+export const removeImage = async (req, res) => {
+	try {
+		const { Key, Bucket } = req.body;
+
+		AWS_S3.deleteObject({ Bucket, Key }, (err, data) => {
+			if (err) {
+				console.log(err);
+				res.sendStatus(400);
+			} else {
+				res.send({ ok: true });
+			}
+		});
+	} catch (error) {
+		console.log(error);
+	}
+};
