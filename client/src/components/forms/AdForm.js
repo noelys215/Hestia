@@ -2,8 +2,12 @@ import { useState } from 'react';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import CurrencyInput from 'react-currency-input-field';
 import { ImageUpload } from './ImageUpload';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 export const AdForm = ({ action, type }) => {
+	const navigate = useNavigate();
 	/* State */
 	const [ad, setAd] = useState({
 		photos: [],
@@ -14,11 +18,30 @@ export const AdForm = ({ action, type }) => {
 		bathrooms: '',
 		carpark: '',
 		landsize: '',
-		type: '',
 		title: '',
 		description: '',
 		loading: false,
+		type,
+		action,
 	});
+
+	const handleSubmit = async () => {
+		try {
+			setAd({ ...ad, loading: true });
+			const { data } = await axios.post('/ad', ad);
+			if (data?.error) {
+				toast.error(data.error);
+				setAd({ ...ad, loading: false });
+			} else {
+				toast.success('Ad Created');
+				setAd({ ...ad, loading: false });
+				// navigate("/dashboard");
+			}
+		} catch (err) {
+			console.log(err);
+			setAd({ ...ad, loading: false });
+		}
+	};
 
 	return (
 		<>
@@ -38,12 +61,14 @@ export const AdForm = ({ action, type }) => {
 
 			<ImageUpload ad={ad} setAd={setAd} />
 
-			<CurrencyInput
-				placeholder="Price"
-				defaultValue={ad?.price}
-				className="form-control mb-3"
-				onValueChange={(val) => setAd({ ...ad, price: val })}
-			/>
+			<div style={{ marginTop: '80px' }}>
+				<CurrencyInput
+					placeholder="Price"
+					defaultValue={ad?.price}
+					className="form-control mb-3"
+					onValueChange={(val) => setAd({ ...ad, price: val })}
+				/>
+			</div>
 
 			<input
 				type="number"
@@ -86,7 +111,9 @@ export const AdForm = ({ action, type }) => {
 				onChange={(e) => setAd({ ...ad, description: e.target.value })}
 			/>
 
-			<button className="btn btn-primary">Submit</button>
+			<button onClick={handleSubmit} className="btn btn-primary">
+				Submit
+			</button>
 
 			<pre>{JSON.stringify(ad, null, 4)}</pre>
 		</>
