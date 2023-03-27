@@ -1,5 +1,5 @@
 import express from 'express';
-import { uploadImage } from '../controllers/ad';
+import { uploadImage } from '../controllers/ad.js';
 import { requireSignIn } from '../middlewares/auth.js';
 const router = express.Router();
 

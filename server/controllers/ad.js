@@ -14,7 +14,7 @@ export const uploadImage = async (req, res) => {
 		/* Image Params */
 		const params = {
 			Bucket: 'hestia-bucket',
-			Key: `${nanoid}.${type}`,
+			Key: `${nanoid()}.${type}`,
 			Body: base64Image,
 			ACL: 'public-read',
 			ContentEncoding: 'base64',
