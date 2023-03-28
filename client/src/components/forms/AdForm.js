@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 export const AdForm = ({ action, type }) => {
+	/* Hooks */
 	const navigate = useNavigate();
 	/* State */
 	const [ad, setAd] = useState({
@@ -35,7 +36,7 @@ export const AdForm = ({ action, type }) => {
 			} else {
 				toast.success('Ad Created');
 				setAd({ ...ad, loading: false });
-				// navigate("/dashboard");
+				navigate('/dashboard');
 			}
 		} catch (err) {
 			console.log(err);
@@ -57,36 +58,52 @@ export const AdForm = ({ action, type }) => {
 						},
 					}}
 				/>
+				<div className="mt-3 ">
+					<ImageUpload ad={ad} setAd={setAd} />
+				</div>
 			</div>
-
-			<ImageUpload ad={ad} setAd={setAd} />
 
 			<div style={{ marginTop: '80px' }}>
 				<CurrencyInput
 					placeholder="Price"
-					defaultValue={ad?.price}
+					defaultValue={ad.price}
 					className="form-control mb-3"
-					onValueChange={(val) => setAd({ ...ad, price: val })}
+					onValueChange={(value) => setAd({ ...ad, price: value })}
 				/>
 			</div>
 
-			<input
-				type="number"
-				min="0"
-				className="form-control mb-3"
-				placeholder="Number of Bathrooms"
-				value={ad.bathrooms}
-				onChange={(e) => setAd({ ...ad, bathrooms: e.target.value })}
-			/>
+			{type === 'House' ? (
+				<>
+					<input
+						type="number"
+						min="0"
+						className="form-control mb-3"
+						placeholder="Bedrooms"
+						value={ad.bedrooms}
+						onChange={(e) => setAd({ ...ad, bedrooms: e.target.value })}
+					/>
 
-			<input
-				type="number"
-				min="0"
-				className="form-control mb-3"
-				placeholder="Number of Car Parks"
-				value={ad.carpark}
-				onChange={(e) => setAd({ ...ad, carpark: e.target.value })}
-			/>
+					<input
+						type="number"
+						min="0"
+						className="form-control mb-3"
+						placeholder="Bathrooms"
+						value={ad.bathrooms}
+						onChange={(e) => setAd({ ...ad, bathrooms: e.target.value })}
+					/>
+
+					<input
+						type="number"
+						min="0"
+						className="form-control mb-3"
+						placeholder="Carpark"
+						value={ad.carpark}
+						onChange={(e) => setAd({ ...ad, carpark: e.target.value })}
+					/>
+				</>
+			) : (
+				''
+			)}
 
 			<input
 				type="text"
@@ -111,11 +128,13 @@ export const AdForm = ({ action, type }) => {
 				onChange={(e) => setAd({ ...ad, description: e.target.value })}
 			/>
 
-			<button onClick={handleSubmit} className="btn btn-primary">
-				Submit
+			<button
+				onClick={handleSubmit}
+				className={`btn btn-primary mb-5 ${ad.loading ? 'disabled' : ''}`}>
+				{ad.loading ? 'Saving...' : 'Submit'}
 			</button>
 
-			<pre>{JSON.stringify(ad, null, 4)}</pre>
+			{/* <pre>{JSON.stringify(ad, null, 4)}</pre> */}
 		</>
 	);
 };
