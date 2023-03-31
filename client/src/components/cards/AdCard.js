@@ -23,28 +23,22 @@ export const AdCard = ({ ad }) => {
 						<p className="card-text">{ad?.address}</p>
 
 						<p className="card-text d-flex justify-content-between">
-							{ad?.bedrooms ? (
+							{ad?.bedrooms && (
 								<span>
 									<IoBedOutline /> {ad?.bedrooms}
 								</span>
-							) : (
-								''
 							)}
 
-							{ad?.bathrooms ? (
+							{ad?.bathrooms && (
 								<span>
 									<TbBath /> {ad?.bathrooms}
 								</span>
-							) : (
-								''
 							)}
 
-							{ad?.landsize ? (
+							{ad?.landsize && (
 								<span>
 									<BiArea /> {ad?.landsize}
 								</span>
-							) : (
-								''
 							)}
 						</p>
 					</div>

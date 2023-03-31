@@ -4,7 +4,7 @@ import { useAuth } from '../../context/auth';
 import axios from 'axios';
 
 export const PrivateRoute = () => {
-	// Context
+	/* Context */
 	// eslint-disable-next-line no-unused-vars
 	const [auth, setAuth] = useAuth();
 	const [ok, setOk] = useState(false);
@@ -28,5 +28,5 @@ export const PrivateRoute = () => {
 		}
 	};
 
-	return ok ? <Outlet /> : '';
+	return ok && <Outlet />;
 };

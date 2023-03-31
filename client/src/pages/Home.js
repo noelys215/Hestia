@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/auth';
 import axios from 'axios';
+import { AdCard } from '../components/cards/AdCard';
 
 export const Home = () => {
 	/* Context */
@@ -16,18 +17,33 @@ export const Home = () => {
 
 	const fetchAds = async () => {
 		try {
-			const { data } = axios.get('/ads');
-			setAdsForSale(data?.adsForSale);
-			setAdsForRent(data?.adsForRent);
-		} catch (error) {
-			console.log(error);
+			const { data } = await axios.get('/ads');
+			setAdsForSale(data.adsForSell);
+			setAdsForRent(data.adsForRent);
+		} catch (err) {
+			console.log(err);
 		}
 	};
 
 	return (
 		<div>
-			<h1 className="display-1 bg-primary text-light p-5">Home</h1>
-			<pre>{JSON.stringify(auth, null, 4)}</pre>
+			<h1 className="display-1 bg-primary text-light p-5">For Sale</h1>
+
+			<div className="container">
+				<div className="row">
+					{adsForSale?.map((ad) => (
+						<AdCard ad={ad} key={ad?.id} />
+					))}
+				</div>
+			</div>
+
+			<div className="container">
+				<div className="row">
+					{adsForRent?.map((ad) => (
+						<AdCard ad={ad} key={ad?.id} />
+					))}
+				</div>
+			</div>
 		</div>
 	);
 };

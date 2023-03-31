@@ -13,7 +13,7 @@ dotenv.config();
 
 const tokenAndUserResponse = (req, res, user) => {
 	const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-		expiresIn: '1h',
+		expiresIn: '7d',
 	});
 	const refreshToken = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
 		expiresIn: '7d',
@@ -59,7 +59,7 @@ export const preRegister = async (req, res) => {
 		}
 
 		const token = jwt.sign({ email, password }, process.env.JWT_SECRET, {
-			expiresIn: '1h',
+			expiresIn: '7d',
 		});
 		// Send Confirmation Email
 		AWS_SES.sendEmail(
@@ -136,7 +136,7 @@ export const forgotPassword = async (req, res) => {
 			user.save();
 
 			const token = jwt.sign({ resetCode }, process.env.JWT_SECRET, {
-				expiresIn: '1h',
+				expiresIn: '7d',
 			});
 
 			// Send Reset Password Email
