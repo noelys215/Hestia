@@ -163,7 +163,7 @@ export const removeFromWishlist = async (req, res) => {
 		const user = await User.findByIdAndUpdate(
 			req.user._id,
 			{
-				$pull: { wishlist: req.body.adId },
+				$pull: { wishlist: req.params.adId },
 			},
 			{ new: true }
 		);
