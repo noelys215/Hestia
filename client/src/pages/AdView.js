@@ -8,12 +8,16 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { AdFeatures } from '../components/cards/AdFeatures';
 import { LikeUnlike } from '../components/misc/LikeUnlike';
+import { MapCard } from '../components/cards/MapCard';
+import HTMLRenderer from 'react-html-renderer';
+import { AdCard } from '../components/cards/AdCard';
 
 dayjs.extend(relativeTime);
 
 export const AdView = () => {
 	/* State */
 	const [ad, setAd] = useState({});
+	// eslint-disable-next-line no-unused-vars
 	const [related, setRelated] = useState([]);
 	/* Hooks */
 	const params = useParams();
@@ -81,6 +85,38 @@ export const AdView = () => {
 					<div className="col-lg-8">
 						<ImageGallery photos={generatePhotosArray(ad?.photos)} />
 					</div>
+				</div>
+			</div>
+
+			<div className="container mb-5 mt-3">
+				<div className="row">
+					<div className="col-lg-8 offset-lg-2">
+						<MapCard ad={ad} />
+						<br />
+
+						<h1>
+							{ad?.type} in {ad?.address} for {ad?.action} ${ad?.price}
+						</h1>
+
+						<AdFeatures ad={ad} />
+
+						<hr />
+
+						<h3 className="fw-bold">{ad?.title}</h3>
+
+						<HTMLRenderer html={ad?.description?.replaceAll('.', '<br/><br/>')} />
+					</div>
+				</div>
+			</div>
+
+			<div className="container-fluid">
+				<h4 className="text-center mb-3">Related Homes</h4>
+				<hr style={{ width: '33%' }} />
+
+				<div className="row">
+					{related?.map((ad) => (
+						<AdCard key={ad._id} ad={ad} />
+					))}
 				</div>
 			</div>
 		</>

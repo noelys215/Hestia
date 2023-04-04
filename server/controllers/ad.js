@@ -127,7 +127,7 @@ export const read = async (req, res) => {
 			action: ad.action,
 			type: ad.type,
 			address: {
-				$regex: ad.googleMap[0].city,
+				$regex: ad.googleMap[0]?.admininstrativeLevels?.levelllong || '',
 				$options: 'i',
 			},
 		})
