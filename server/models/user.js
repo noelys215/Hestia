@@ -29,6 +29,7 @@ const schema = new Schema(
 		address: { type: String, default: '' },
 		company: { type: String, default: '' },
 		phone: { type: String, default: '' },
+		about: { type: String, default: '' },
 		photo: {},
 		role: {
 			type: [String],
