@@ -110,6 +110,7 @@ export const login = async (req, res) => {
 		const { email, password } = req.body;
 		// 1 find user by email
 		const user = await User.findOne({ email });
+		if (!user) return res.json({ error: `User Doesn't Exist` });
 		// 2 compare password
 		const match = await comparePassword(password, user.password);
 		if (!match) {

@@ -3,6 +3,10 @@ import { nanoid } from 'nanoid';
 import slugify from 'slugify';
 import Ad from '../models/ad.js';
 import User from '../models/user.js';
+import * as dotenv from 'dotenv';
+import { emailTemplate } from '../helpers/email.js';
+
+dotenv.config();
 
 export const uploadImage = async (req, res) => {
 	try {
@@ -171,6 +175,52 @@ export const removeFromWishlist = async (req, res) => {
 		const { password, resetCode, ...rest } = user._doc;
 
 		res.json(rest);
+	} catch (err) {
+		console.log(err);
+	}
+};
+
+export const contactSeller = async (req, res) => {
+	try {
+		const { name, email, message, phone, adId } = req.body;
+		/* Pull recipient email from ad */
+		const ad = await Ad.findById(adId).populate('postedBy', 'email');
+
+		/* Find Logged in User */
+		const user = await User.findByIdAndUpdate(req.user._id, {
+			$addToSet: { enquiredProperties: adId },
+		});
+
+		if (!user) {
+			return res.json({ error: `Couldn't find user with that email` });
+		} else {
+			/* Send Email */
+			config.AWSSES.sendEmail(
+				emailTemplate(
+					ad.postedBy.email,
+					`
+        <p>You have received a new customer enquiry</p>
+          <h4>Customer details</h4>
+          <p>Name: ${name}</p>
+          <p>Email: ${email}</p>
+          <p>Phone: ${phone}</p>
+          <p>Message: ${message}</p>
+        <a href="${process.env.CLIENT_URL}/ad/${ad.slug}">${ad.type} in ${ad.address} for ${ad.action} ${ad.price}</a>
+        `,
+					email,
+					'New enquiry received'
+				),
+				(err, data) => {
+					if (err) {
+						console.log(err);
+						return res.json({ ok: false });
+					} else {
+						console.log(data);
+						return res.json({ ok: true });
+					}
+				}
+			);
+		}
 	} catch (err) {
 		console.log(err);
 	}
