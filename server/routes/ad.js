@@ -8,6 +8,9 @@ import {
 	addToWishlist,
 	removeFromWishlist,
 	contactSeller,
+	userAds,
+	update,
+	remove,
 } from '../controllers/ad.js';
 import { requireSignIn } from '../middlewares/auth.js';
 const router = express.Router();
@@ -21,5 +24,9 @@ router.get('/ad/:slug', read);
 router.post('/wishlist', requireSignIn, addToWishlist);
 router.delete('/wishlist/:adId', requireSignIn, removeFromWishlist);
 router.post('/contact-seller', requireSignIn, contactSeller);
+
+router.get('/user-ads/:page', requireSignIn, userAds);
+router.put('/ad/:_id', requireSignIn, update);
+router.delete('/ad/:_id', requireSignIn, remove);
 
 export default router;
