@@ -10,6 +10,16 @@ export const Sidebar = () => {
 					</NavLink>
 				</li>
 				<li className="nav-item">
+					<NavLink className="nav-link" to="/user/wishlist">
+						Wishlist
+					</NavLink>
+				</li>
+				<li className="nav-item">
+					<NavLink className="nav-link" to="/user/enquiries">
+						Enquiries
+					</NavLink>
+				</li>
+				<li className="nav-item">
 					<NavLink className="nav-link" to="/ad/create">
 						Create Ad
 					</NavLink>
