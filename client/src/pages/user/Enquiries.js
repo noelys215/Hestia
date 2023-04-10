@@ -6,10 +6,11 @@ import { AdCard } from '../../components/cards/AdCard';
 
 export const Enquiries = () => {
 	/* Context */
+	// eslint-disable-next-line no-unused-vars
 	const [auth, setAuth] = useAuth();
 	/* State */
 	const [ads, setAds] = useState([]);
-	const [loading, setLoading] = useState(false);
+	// const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		fetchAds();

@@ -18,4 +18,8 @@ router.get('/profile/:username', controller.publicProfile);
 router.put('/update-password', requireSignIn, controller.updatePassword);
 router.put('/update-profile', requireSignIn, controller.updateProfile);
 
+router.get('/agents', controller.agents);
+router.get('/agent-ad-count/:_id', controller.agentAdCount);
+router.get('/agent/:username', controller.agent);
+
 export default router;

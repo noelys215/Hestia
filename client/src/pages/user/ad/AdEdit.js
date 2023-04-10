@@ -82,6 +82,8 @@ export const AdEdit = ({ action, type }) => {
 	};
 
 	const handleDelete = async () => {
+		const answer = window.confirm('Delete listing?');
+		if (!answer) return;
 		try {
 			setAd({ ...ad, loading: true });
 

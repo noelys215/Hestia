@@ -3,12 +3,15 @@ import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import CurrencyInput from 'react-currency-input-field';
 import { ImageUpload } from './ImageUpload';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { useAuth } from '../../context/auth';
 
 export const AdForm = ({ action, type }) => {
+	/* Context */
+	const [auth, setAuth] = useAuth();
 	/* Hooks */
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 	/* State */
 	const [ad, setAd] = useState({
 		photos: [],
@@ -34,9 +37,18 @@ export const AdForm = ({ action, type }) => {
 				toast.error(data.error);
 				setAd({ ...ad, loading: false });
 			} else {
+				/* Update Context */
+				setAuth({ ...auth, user: data.user });
+				/* Update Local Storage */
+				const fromLS = JSON.parse(localStorage.getItem('auth'));
+				fromLS.user = data.user;
+				localStorage.setItem('auth', JSON.stringify(fromLS));
+
 				toast.success('Ad Created');
 				setAd({ ...ad, loading: false });
-				navigate('/dashboard');
+				// navigate('/dashboard');
+				/* Reload page on redirect */
+				window.location.href = '/dashboard';
 			}
 		} catch (err) {
 			console.log(err);
@@ -133,8 +145,6 @@ export const AdForm = ({ action, type }) => {
 				className={`btn btn-primary mb-5 ${ad.loading ? 'disabled' : ''}`}>
 				{ad.loading ? 'Saving...' : 'Submit'}
 			</button>
-
-			{/* <pre>{JSON.stringify(ad, null, 4)}</pre> */}
 		</>
 	);
 };
