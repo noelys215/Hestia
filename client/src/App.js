@@ -29,6 +29,8 @@ import { Rent } from './pages/Rent';
 import { SearchProvider } from './context/search';
 import { Search } from './pages/Search';
 
+const PageNotFound = () => <div className="text-center p-5">404 PAGE NOT FOUND!</div>;
+
 function App() {
 	return (
 		<BrowserRouter>
@@ -66,6 +68,8 @@ function App() {
 						<Route path="/buy" element={<Buy />} />
 						<Route path="/rent" element={<Rent />} />
 						<Route path="/search" element={<Search />} />
+
+						<Route path="*" element={<PageNotFound />} />
 					</Routes>
 					<Footer />
 				</SearchProvider>

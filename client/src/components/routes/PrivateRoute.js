@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useAuth } from '../../context/auth';
 import axios from 'axios';
+import { RedirectRoute } from './RedirectRoute';
 
 export const PrivateRoute = () => {
 	/* Context */
@@ -28,5 +29,5 @@ export const PrivateRoute = () => {
 		}
 	};
 
-	return ok && <Outlet />;
+	return ok ? <Outlet /> : <RedirectRoute />;
 };
