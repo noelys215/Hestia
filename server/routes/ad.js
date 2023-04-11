@@ -13,6 +13,9 @@ import {
 	remove,
 	enquiriedProperties,
 	wishlist,
+	adsForSell,
+	adsForRent,
+	search,
 } from '../controllers/ad.js';
 import { requireSignIn } from '../middlewares/auth.js';
 const router = express.Router();
@@ -33,5 +36,10 @@ router.delete('/ad/:_id', requireSignIn, remove);
 
 router.get('/enquiries', requireSignIn, enquiriedProperties);
 router.get('/wishlist', requireSignIn, wishlist);
+
+router.get('/ads-for-sell', adsForSell);
+router.get('/ads-for-rent', adsForRent);
+
+router.get('/search', search);
 
 export default router;

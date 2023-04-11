@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../context/auth';
 import axios from 'axios';
 import { AdCard } from '../components/cards/AdCard';
+import { SearchForm } from '../components/forms/SearchForm';
 
 export const Home = () => {
 	/* Context */
@@ -27,8 +28,8 @@ export const Home = () => {
 
 	return (
 		<div>
+			<SearchForm />
 			<h1 className="display-1 bg-primary text-light p-5">For Sale</h1>
-
 			<div className="container">
 				<div className="row">
 					{adsForSale?.map((ad) => (

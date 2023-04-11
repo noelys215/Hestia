@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/auth';
-import { Link, useNavigate } from 'react-router-dom';
+// import {  useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 
 export const ContactSeller = ({ ad }) => {
 	/* Context */
+	// eslint-disable-next-line no-unused-vars
 	const [auth, setAuth] = useAuth();
 	/* State */
 	const [name, setName] = useState('');
@@ -14,7 +15,7 @@ export const ContactSeller = ({ ad }) => {
 	const [phone, setPhone] = useState('');
 	const [loading, setLoading] = useState('');
 	/* Hooks */
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 
 	const loggedIn = auth.user !== null && auth.token !== '';
 

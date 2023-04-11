@@ -330,3 +330,62 @@ export const wishlist = async (req, res) => {
 		console.log(err);
 	}
 };
+
+export const adsForSell = async (req, res) => {
+	try {
+		const ads = await Ad.find({ action: 'Sell' })
+			.select('-googleMap -location -photo.Key -photo.key -photo.ETag')
+			.sort({ createdAt: -1 })
+			.limit(24);
+
+		res.json(ads);
+	} catch (err) {
+		console.log(err);
+	}
+};
+
+export const adsForRent = async (req, res) => {
+	try {
+		const ads = await Ad.find({ action: 'Rent' })
+			.select('-googleMap -location -photo.Key -photo.key -photo.ETag')
+			.sort({ createdAt: -1 })
+			.limit(24);
+
+		res.json(ads);
+	} catch (err) {
+		console.log(err);
+	}
+};
+
+export const search = async (req, res) => {
+	try {
+		console.log('req query', req.query);
+		const { action, address, type, priceRange } = req.query;
+
+		const geo = await GOOGLE_GEOCODER.geocode(address);
+
+		const ads = await Ad.find({
+			action: action === 'Buy' ? 'Sell' : 'Rent',
+			type,
+			price: {
+				$gte: parseInt(priceRange[0]),
+				$lte: parseInt(priceRange[1]),
+			},
+			location: {
+				$near: {
+					$maxDistance: 50000, // 1000m = 1km
+					$geometry: {
+						type: 'Point',
+						coordinates: [geo?.[0]?.longitude, geo?.[0]?.latitude],
+					},
+				},
+			},
+		})
+			.limit(24)
+			.sort({ createdAt: -1 })
+			.select('-photos.key -photos.Key -photos.ETag -photos.Bucket -location -googleMap');
+		res.json(ads);
+	} catch (err) {
+		console.log(err);
+	}
+};

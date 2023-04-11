@@ -25,7 +25,7 @@ export const Main = () => {
 				Home
 			</NavLink>
 
-			{/* <NavLink className="nav-link" aria-current="page" to="/search">
+			<NavLink className="nav-link" aria-current="page" to="/search">
 				Search
 			</NavLink>
 
@@ -35,7 +35,7 @@ export const Main = () => {
 
 			<NavLink className="nav-link" aria-current="page" to="/rent">
 				Rent
-			</NavLink> */}
+			</NavLink>
 
 			<NavLink className="nav-link" aria-current="page" to="/agents">
 				Agents

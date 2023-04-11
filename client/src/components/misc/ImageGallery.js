@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import { useState, useCallback } from 'react';
 import Gallery from 'react-photo-gallery';
 import Carousel, { Modal, ModalGateway } from 'react-images';
@@ -9,7 +9,7 @@ export const ImageGallery = ({ photos }) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	/* Hooks */
-	const params = useParams();
+	// const params = useParams();
 
 	const openLightbox = useCallback((event, { photo, index }) => {
 		setCurrent(index);

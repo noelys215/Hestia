@@ -27,7 +27,7 @@ export const AccountActivate = () => {
 				localStorage.setItem('auth', JSON.stringify(data));
 				// save in context
 				setAuth(data);
-				toast.success('Successfully logged in. Welcome to Realist app.');
+				toast.success('Login Successful, Welcome to Hestia.');
 				navigate('/');
 			}
 		} catch (err) {
